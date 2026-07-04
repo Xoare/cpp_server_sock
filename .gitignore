@@ -1,1 +1,9 @@
-﻿/me_first_server_on_socket.sln
+.vs/
+x64/
+Debug/
+Release/
+*.exe
+*.pdb
+*.obj
+*.user
+*.suo
