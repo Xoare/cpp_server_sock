@@ -24,12 +24,18 @@
     <ClCompile Include="Server.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="DetectedProtocol.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Server.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="DetectedProtocol.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

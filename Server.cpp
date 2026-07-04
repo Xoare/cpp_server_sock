@@ -13,6 +13,8 @@ void ServerSocket::do_accept() {
 	acceptor_.async_accept([this](boost::system::error_code ec, boost::asio::ip::tcp::socket client_socket) {
 		if (!ec) {
 			std::cout << "New Connect client" << std::endl;
+			auto endpoint = client_socket.remote_endpoint();
+			std::cout << "client - " << endpoint.address() << ":" << endpoint.port() << std::endl;
 			auto session = std::make_shared<ClientSocket>(std::move(client_socket));
 			session->start();
 		}

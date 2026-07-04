@@ -6,7 +6,11 @@ ClientSocket::ClientSocket(boost::asio::ip::tcp::socket socket)
 }
 
 void ClientSocket::start() {
-    do_write("Hello!!\n");
+    do_write("HTTP/1.1 200 OK\r\n"
+        "Content-Length: 20\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+        "<html><body><h1>Hello from C++!</h1></body></html>\r\n");
     do_read();
 }
 
@@ -26,7 +30,7 @@ void ClientSocket::do_write(const std::string& message) {
 void ClientSocket::do_read() {
     auto self = shared_from_this();
 
-    boost::asio::async_read_until(socket_, read_buffer_, '\n',
+    boost::asio::async_read_until(socket_, read_buffer_, "\r\n\r\n",
         [this, self](boost::system::error_code ec, size_t bytes_transferred) {
             if (ec) {
                 std::cout << "Client disconnected: " << ec.message() << std::endl;
