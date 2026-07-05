@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "DetectedProtocol.h"
 #include <iostream>
 
 ClientSocket::ClientSocket(boost::asio::ip::tcp::socket socket)
@@ -37,15 +38,21 @@ void ClientSocket::do_read() {
                 return;
             }
 
-            std::istream input_stream(&read_buffer_);
-            std::string line;
-            std::getline(input_stream, line);
+            std::string request_data;
+            request_data.resize(bytes_transferred);
+            boost::asio::buffer_copy(
+                boost::asio::buffer(request_data),
+                read_buffer_.data()
+            );
 
-            if (!line.empty()) {
-                std::cout << "Received: " << line << std::endl;
-            }
+            std::cout << "=== HTTP Request (" << bytes_transferred << " bytes) ===" << std::endl;
+            std::cout << request_data << std::endl;
+            std::cout << "=====================================" << std::endl;
 
-            read_buffer_.consume(read_buffer_.size());
+            DetectedProtocol detected(request_data);
+            detected.detected_protocol_request();
+
+            read_buffer_.consume(bytes_transferred);
 
             do_read();
         });
