@@ -127,11 +127,13 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DetectedProtocol.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Obfuscation.cpp" />
     <ClCompile Include="Server.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="DetectedProtocol.h" />
+    <ClInclude Include="Obfuscation.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

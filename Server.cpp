@@ -18,6 +18,9 @@ void ServerSocket::do_accept() {
 			auto session = std::make_shared<ClientSocket>(std::move(client_socket));
 			session->start();
 		}
+		else {
+			std::cout << "Error: " << ec.message() << std::endl;
+		}
 		ServerSocket::do_accept();
 		});
 }
