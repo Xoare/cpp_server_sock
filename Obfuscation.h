@@ -13,17 +13,17 @@ public:
 
     std::string generateDummyResponse() const;
 
-    std::vector<uint8_t> addNoise(const std::vector<uint8_t>& data);
+    std::vector<uint8_t> addNoise(std::vector<uint8_t>& data);
 
-    std::vector<uint8_t> removeNoise(const std::vector<uint8_t>& data);
+    std::vector<uint8_t> removeNoise(std::vector<uint8_t>& data);
 
-    std::vector<uint8_t> tlsMask(const std::vector<uint8_t>& data);
+    std::vector<uint8_t> tlsMask( std::vector<uint8_t>& data);
 
     std::vector<uint8_t> tlsUnmask(const std::vector<uint8_t>& data);
 
-    std::vector<uint8_t> xorEncrypt(const std::vector<uint8_t>& data, uint8_t key);
+    std::vector<uint8_t> xorEncrypt( std::vector<uint8_t>& data, uint8_t key);
 
-    std::vector<uint8_t> xorDecrypt(const std::vector<uint8_t>& data, uint8_t key);
+    void xorDecrypt(std::vector<uint8_t>& data, uint8_t key);
 
 private:
 
