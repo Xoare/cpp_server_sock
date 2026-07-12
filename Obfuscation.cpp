@@ -6,16 +6,18 @@
 
 // string -> byte
 std::vector<uint8_t> Obffuscation::maskRequest(const std::string& raw_request) {
+	std::cout << raw_request;
 	std::vector<uint8_t> byte_raw_request;
-	uint16_t bite = static_cast<uint8_t>(raw_request.size());
+	uint16_t bite = static_cast<uint16_t>(raw_request.size());
 	byte_raw_request.push_back(bite);
 	byte_raw_request.insert(byte_raw_request.end(), raw_request.begin(), raw_request.end());
 	for (int index = 0; index < byte_raw_request.size(); index++) {
 		std::cout << std::hex << static_cast<int>(byte_raw_request[index]) << " ";
 	}
-	xorEncrypt(byte_raw_request, XOR_KEY);
 
-	//addNoise(byte_raw_request);
+	xorEncrypt(byte_raw_request, XOR_KEY);
+		
+	addNoise(byte_raw_request);
 
 	return tlsMask(byte_raw_request);
 }
@@ -69,7 +71,7 @@ std::vector<uint8_t> Obffuscation::removeNoise(std::vector<uint8_t>& data) {
 // tls + data + noise: {0x17, 0x03, 0x03, sen byte, jun byte data, noise...}
 std::vector<uint8_t> Obffuscation::tlsMask(std::vector<uint8_t>& data) {
     std::vector<uint8_t> result;
-
+	std::cout << "hello";
     result.push_back(0x17);
     result.push_back(0x03);
     result.push_back(0x03);
@@ -77,6 +79,9 @@ std::vector<uint8_t> Obffuscation::tlsMask(std::vector<uint8_t>& data) {
     result.push_back(data.size() & 0xFF);
 
     result.insert(result.end(), data.begin(), data.end());
+	for (int index = 0; index < result.size(); index++) {
+		std::cout << std::hex << static_cast<int>(result[index]) << " ";
+	}
 
     return result;
 }
@@ -89,6 +94,7 @@ std::vector<uint8_t> Obffuscation::tlsUnmask(const std::vector<uint8_t>& data) {
 
 	std::vector<uint8_t> result(data.begin() + 5, data.end());
 	return result;
+
 }
 
 // byte = byte xor key

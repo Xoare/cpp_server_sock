@@ -1,29 +1,41 @@
 #include "Client.h"
 #include "DetectedProtocol.h"
-#include <iostream>
 #include "Obfuscation.h"
+
+#include <iostream>
+
+std::vector<uint8_t> ClientSocket::TestFunctionStringInDoWrite(const std::string message) {
+    Obffuscation obf;
+    std::vector<uint8_t> result_message = obf.maskRequest(message);
+    return result_message;
+}
+
 
 ClientSocket::ClientSocket(boost::asio::ip::tcp::socket socket)
     : socket_(std::move(socket)) {
 }
 
 void ClientSocket::start() {
-    do_write("HTTP/1.1 200 OK\r\n"
-        "Content-Length: 20\r\n"
-        "Content-Type: text/html\r\n"
-        "\r\n"
+    std::vector<uint8_t> result_message = TestFunctionStringInDoWrite("HTTP/1.1 200 OK\r\n"
+    "Content-Length: 20\r\n"
+    "Content-Type: text/html\r\n"
+    "\r\n"
         "<html><body><h1>Hello from C++!</h1></body></html>\r\n");
+    do_write(std::move(result_message));
     do_read();
 }
 
-void ClientSocket::do_write(const std::string& message) {
+void ClientSocket::do_write(const std::vector<uint8_t> message_byte) {
     auto self = shared_from_this();
-    write_buffer_ = message;
-    Obffuscation obf;
-    std::vector<uint8_t> mask = obf.maskRequest(message);
+    std::cout << "\n\n\n\n";
+    for (int index = 0; index < message_byte.size(); index++) {
+        std::cout << std::hex << static_cast<int>(message_byte[index]) << " ";
+    }
+    std::vector<uint8_t> byte = std::move(message_byte);
+
     boost::asio::async_write(socket_,
-        boost::asio::buffer(mask),
-        [self](boost::system::error_code ec, size_t) {
+        boost::asio::buffer(byte),
+        [self, byte = std::move(byte)](boost::system::error_code ec, size_t transferred) {
             if (ec) {
                 std::cerr << "Write error: " << ec.message() << std::endl;
             }

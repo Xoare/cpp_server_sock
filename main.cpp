@@ -1,7 +1,7 @@
 ﻿#include <boost/asio.hpp>
 #include <iostream>
 #include <string>
-
+#include "Obfuscation.h"
 #include "Server.h"
 
 
@@ -16,8 +16,8 @@ int main() {
     std::cout << "Server started on 192.168.1.55:8080" << std::endl;
     std::cout << "=======================================" << std::endl;
 
-    io.run();
-
     std::cout << "Boost.Asio is working!" << std::endl;
+
+    io.run();
     return 0;
 }
