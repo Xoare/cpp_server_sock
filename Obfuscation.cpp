@@ -46,16 +46,19 @@ std::string Obffuscation::generateDummyResponse() const {
 
 // noise -> + -> + -> byte
 std::vector<uint8_t> Obffuscation::addNoise(std::vector<uint8_t>& data) {
-	int index = 16;
-	while (index < data.size()) {
-		if (index + NOISE_INTERVAL <= data.size()) {
-			char noise = 'a' + rand() % ('z' - 'a');
-			uint8_t noise_byte = static_cast<uint8_t>(noise);
-			data.insert(data.begin() + index, noise_byte);
-			index += NOISE_INTERVAL + 1;
-		}
-	}
+	if (data.empty()) {
 		return data;
+	}
+
+	size_t index = NOISE_INTERVAL;
+
+	while (index < data.size()) {
+		uint8_t noise_byte = static_cast<uint8_t>(rand() % 256);
+		data.insert(data.begin() + index, noise_byte);
+		index += NOISE_INTERVAL + 1;
+	}
+
+	return data;
 }
 
 // noise -> - -> - byte
