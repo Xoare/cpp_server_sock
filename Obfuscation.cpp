@@ -6,20 +6,16 @@
 
 // string -> byte
 std::vector<uint8_t> Obffuscation::maskRequest(const std::string& raw_request) {
-	std::cout << raw_request;
-	std::vector<uint8_t> byte_raw_request;
-	uint16_t bite = static_cast<uint16_t>(raw_request.size());
-	byte_raw_request.push_back(bite);
-	byte_raw_request.insert(byte_raw_request.end(), raw_request.begin(), raw_request.end());
-	for (int index = 0; index < byte_raw_request.size(); index++) {
-		std::cout << std::hex << static_cast<int>(byte_raw_request[index]) << " ";
+	std::vector<uint8_t> data = stringToBytes(raw_request);
+	for (int index = 0; index < data.size(); index++) {
+		std::cout << std::hex << static_cast<int>(data[index]) << " ";
 	}
 
-	xorEncrypt(byte_raw_request, XOR_KEY);
+	xorEncrypt(data, XOR_KEY);
 		
-	addNoise(byte_raw_request);
+	addNoise(data);
 
-	return tlsMask(byte_raw_request);
+	return tlsMask(data);
 }
 
 
@@ -114,4 +110,11 @@ void Obffuscation::xorDecrypt(std::vector<uint8_t>& data, uint8_t key) {
 }
 
 
-// add validation in the future
+std::vector<uint8_t> Obffuscation::stringToBytes(const std::string& data) {
+	std::vector<uint8_t> byte_raw_request;
+	uint16_t bite = static_cast<uint16_t>(data.size());
+	byte_raw_request.push_back(bite);
+	byte_raw_request.insert(byte_raw_request.end(), data.begin(), data.end());
+
+	return byte_raw_request;
+}
