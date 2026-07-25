@@ -17,9 +17,9 @@ ClientSocket::ClientSocket(boost::asio::ip::tcp::socket socket)
 
 void ClientSocket::start() {
     std::vector<uint8_t> result_message = TestFunctionStringInDoWrite("HTTP/1.1 200 OK\r\n"
-    "Content-Length: 20\r\n"
-    "Content-Type: text/html\r\n"
-    "\r\n"
+        "Content-Length: 20\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
         "<html><body><h1>Hello from C++!</h1></body></html>\r\n");
     do_write(std::move(result_message));
     do_read();
@@ -28,9 +28,7 @@ void ClientSocket::start() {
 void ClientSocket::do_write(const std::vector<uint8_t> message_byte) {
     auto self = shared_from_this();
     std::cout << "\n\n\n\n";
-    for (int index = 0; index < message_byte.size(); index++) {
-        std::cout << std::hex << static_cast<int>(message_byte[index]) << " ";
-    }
+
     std::vector<uint8_t> byte = std::move(message_byte);
 
     boost::asio::async_write(socket_,

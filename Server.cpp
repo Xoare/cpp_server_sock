@@ -14,7 +14,7 @@ void ServerSocket::do_accept() {
 		if (!ec) {
 			std::cout << "New Connect client" << std::endl;
 			auto endpoint = client_socket.remote_endpoint();
-			std::cout << "client - " << endpoint.address() << ":" << endpoint.port() << std::endl;
+			std::cout << "Client address - " << endpoint.address() << ":" << endpoint.port() << std::endl;
 			auto session = std::make_shared<ClientSocket>(std::move(client_socket));
 			session->start();
 		}

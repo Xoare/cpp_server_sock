@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="DetectedProtocol.cpp" />
+    <ClCompile Include="Fragmentation.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Obfuscation.cpp" />
     <ClCompile Include="Server.cpp" />
@@ -133,6 +134,7 @@
   <ItemGroup>
     <ClInclude Include="Client.h" />
     <ClInclude Include="DetectedProtocol.h" />
+    <ClInclude Include="Fragmentation.h" />
     <ClInclude Include="Obfuscation.h" />
     <ClInclude Include="Server.h" />
   </ItemGroup>
